@@ -1,7 +1,9 @@
 {
   "name": "nodejs_apprenticeship",
   "version": "1.0.0",
-  "scripts": {},
+  "scripts": {
+    "start": "tsc && node ./dist/Controllers/index.js"
+  },
   "devDependencies": {
     "@types/express": "^4.17.13",
     "@types/jsonwebtoken": "^8.5.5",
