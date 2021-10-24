@@ -1,6 +1,6 @@
 import { validateEmptyString } from "./utils";
 
-class User {
+export default class User {
   private _username: string;
   private _password: string;
 
