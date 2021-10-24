@@ -1,4 +1,4 @@
-import { validateEmptyString, validateYear } from "./utils";
+import { validateEmptyString, validateYear } from "./Utils";
 
 export default class Actor {
   private _firstName: string;

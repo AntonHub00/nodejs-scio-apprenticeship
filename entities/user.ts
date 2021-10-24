@@ -1,4 +1,4 @@
-import { validateEmptyString } from "./utils";
+import { validateEmptyString } from "./Utils";
 
 export default class User {
   private _username: string;

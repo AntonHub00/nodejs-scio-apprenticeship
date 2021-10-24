@@ -1,6 +1,6 @@
-import Actor from "./actor";
+import Actor from "./Actor";
 
-import { validateEmptyString, validateYear } from "./utils";
+import { validateEmptyString, validateYear } from "./Utils";
 
 export default class Movie {
   private _title: string;
