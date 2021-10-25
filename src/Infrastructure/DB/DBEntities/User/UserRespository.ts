@@ -1,11 +1,11 @@
-import { getRepository } from "typeorm";
+import { getRepository, Repository } from "typeorm";
 import UserDBEntity from "./UserDBEntity";
 
 import IUser from "../../../../Domain/UseCases/User/Contracts/IUser";
 import IUserResporitory from "../../../../Domain/UseCases/User/Contracts/IUserRepository";
 
 export default class UserRepository implements IUserResporitory {
-  private repository;
+  private repository: Repository<UserDBEntity>;
 
   constructor() {
     this.repository = getRepository(UserDBEntity);
