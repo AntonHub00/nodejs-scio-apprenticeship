@@ -19,7 +19,7 @@ if (!dbConfigIsValid) throw new Error("Database configuration not set");
 if (isNaN(dbConfigVariables.port))
   throw new Error("Database port must be a number");
 
-createConnection({
+const dbConnection = createConnection({
   type: "mssql",
   host: dbConfigVariables.host,
   database: dbConfigVariables.database,
@@ -33,3 +33,5 @@ createConnection({
   synchronize: true,
   entities: [UserDBEntity],
 });
+
+export { dbConnection };
