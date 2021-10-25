@@ -12,21 +12,35 @@ class AuthenticationError extends Error {
   }
 }
 
-const loginUser = (
-  userData: IUser,
-  userRespository: IUserResporitory,
-  passwordHasher: IPasswordHasher,
-  jwt: IJWT
-): string => {
-  const user = new User(userData.username, userData.password);
+export default class LoginUserUseCase {
+  private passwordHasher: IPasswordHasher;
+  private jwt: IJWT;
+  private repository: IUserResporitory;
 
-  const dbUser = userRespository.findUserByUsername(user.username);
+  constructor(
+    passwordHasher: IPasswordHasher,
+    jwt: IJWT,
+    repository: IUserResporitory
+  ) {
+    this.passwordHasher = passwordHasher;
+    this.jwt = jwt;
+    this.repository = repository;
+  }
 
-  if (
-    !dbUser ||
-    passwordHasher.compareHashedPassword(user.password, dbUser.password)
-  )
-    throw new AuthenticationError();
+  async loginUser(userData: IUser) {
+    const user = new User(userData.username, userData.password);
 
-  return jwt.generate(user.username);
-};
+    const dbUser = await this.repository.findUserByUsername(user.username);
+
+    if (!dbUser) throw new AuthenticationError();
+
+    const passwordIsValid = await this.passwordHasher.compareHashedPassword(
+      user.password,
+      dbUser.password
+    );
+
+    if (!passwordIsValid) throw new AuthenticationError();
+
+    return this.jwt.generate(user.username);
+  }
+}

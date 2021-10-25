@@ -3,16 +3,25 @@ import IUserResporitory from "./Contracts/IUserRepository";
 import User from "../../Entities/User";
 import IPasswordHasher from "./Contracts/IPasswordHasher";
 
-const registerUser = async (
-  userData: IUser,
-  passwordHasher: IPasswordHasher,
-  userRespository: IUserResporitory
-) => {
-  const hashedPassword = await passwordHasher.hashPassword(userData.password);
+export default class RegisterUserUseCase {
+  private passwordHasher: IPasswordHasher;
+  private repository: IUserResporitory;
 
-  const user = new User(userData.username, hashedPassword);
+  constructor(passwordHasher: IPasswordHasher, repository: IUserResporitory) {
+    this.passwordHasher = passwordHasher;
+    this.repository = repository;
+  }
 
-  userRespository.create({ username: user.username, password: user.password });
-};
+  async registerUser(userData: IUser) {
+    const hashedPassword = await this.passwordHasher.hashPassword(
+      userData.password
+    );
 
-export { registerUser };
+    const user = new User(userData.username, hashedPassword);
+
+    await this.repository.create({
+      username: user.username,
+      password: user.password,
+    });
+  }
+}

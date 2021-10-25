@@ -11,12 +11,17 @@ export default class UserRepository implements IUserResporitory {
     this.repository = getRepository(UserDBEntity);
   }
 
-  public create(user: IUser) {
+  public async create(user: IUser) {
     const newUser: UserDBEntity = this.repository.create(user);
-    this.repository.save(newUser);
+    await this.repository.save(newUser);
   }
 
-  public findUserByUsername(username: string) {
-    return { username: "TEST", password: "password" };
+  public async findUserByUsername(username: string) {
+    const user = await this.repository.findOne(username);
+
+    if (user != undefined)
+      return { username: user.username, password: user.password };
+
+    return null;
   }
 }
