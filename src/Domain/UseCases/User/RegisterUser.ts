@@ -19,6 +19,10 @@ export default class RegisterUserUseCase {
 
     const user = new User(userData.username, hashedPassword);
 
+    const dbUser = await this.repository.findUserByUsername(user.username);
+
+    if (dbUser != null) throw new Error("Username already exists");
+
     await this.repository.create({
       username: user.username,
       password: user.password,
