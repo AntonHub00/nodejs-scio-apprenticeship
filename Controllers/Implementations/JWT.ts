@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import IJWT from "../../UseCases/User/Contracts/IJWT";
 
-class JWT implements IJWT {
+export default class JWT implements IJWT {
   private secret: string;
 
   constructor() {

@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 import IPasswordHasher from "../../UseCases/User/Contracts/IPasswordHasher";
 
-class PasswordHasher implements IPasswordHasher {
+export default class PasswordHasher implements IPasswordHasher {
   private saltRounds = 10;
 
   public async hashPassword(password: string) {
