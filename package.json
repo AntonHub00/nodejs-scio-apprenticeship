@@ -2,7 +2,7 @@
   "name": "nodejs_apprenticeship",
   "version": "1.0.0",
   "scripts": {
-    "start": "tsc && node ./dist/Infrastructure/Controllers/index.js"
+    "start": "tsc && node ./dist/index.js"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
