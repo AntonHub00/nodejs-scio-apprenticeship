@@ -6,3 +6,5 @@ import "../DB/DBConnection";
 
 import JWT from "../JWT/JWT";
 import PasswordHasher from "../PasswordHasher/PasswordHasher";
+
+console.log("WORKING!");
