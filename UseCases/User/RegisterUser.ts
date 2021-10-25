@@ -3,12 +3,12 @@ import IUserResporitory from "./Contracts/IUserRepository";
 import User from "../../Entities/User";
 import IPasswordHasher from "./Contracts/IPasswordHasher";
 
-const registerUser = (
+const registerUser = async (
   userData: IUser,
   passwordHasher: IPasswordHasher,
   userRespository: IUserResporitory
 ) => {
-  const hashedPassword = passwordHasher.hashPassword(userData.password);
+  const hashedPassword = await passwordHasher.hashPassword(userData.password);
 
   const user = new User(userData.username, hashedPassword);
 
