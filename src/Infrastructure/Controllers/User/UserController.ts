@@ -11,8 +11,10 @@ export default class UserController {
     this._router = Router();
 
     this.registerUser = this.registerUser.bind(this);
+    this.loginUser = this.loginUser.bind(this);
 
     this._router.post("/register", this.registerUser);
+    this.router.post("/login", this.loginUser);
   }
 
   public get router(): Router {
@@ -31,6 +33,23 @@ export default class UserController {
     try {
       await this.dependencies.RegisterUser.registerUser({ username, password });
       res.status(201).send({ username, password });
+    } catch (error) {
+      const e = error as Error;
+      res.status(400).send({ error: e.message });
+    }
+  }
+
+  public async loginUser(req: Request, res: Response) {
+    const username: string = req.body.username;
+    const password: string = req.body.password;
+
+    try {
+      const token = await this.dependencies.LoginUser.loginUser({
+        username,
+        password,
+      });
+
+      res.status(200).send({ token });
     } catch (error) {
       const e = error as Error;
       res.status(400).send({ error: e.message });
