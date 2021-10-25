@@ -1,5 +1,7 @@
 import { createConnection } from "typeorm";
 
+import UserDBEntity from "./DBEntities/User/UserDBEntity";
+
 const dbConfigVariables = {
   host: process.env.DB_HOST,
   database: process.env.DB_NAME,
@@ -27,4 +29,7 @@ createConnection({
   options: {
     encrypt: false,
   },
+  logging: false,
+  synchronize: true,
+  entities: [UserDBEntity],
 });
