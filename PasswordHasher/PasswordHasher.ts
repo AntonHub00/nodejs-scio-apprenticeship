@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-import IPasswordHasher from "../../UseCases/User/Contracts/IPasswordHasher";
+import IPasswordHasher from "../UseCases/User/Contracts/IPasswordHasher";
 
 export default class PasswordHasher implements IPasswordHasher {
   private saltRounds = 10;

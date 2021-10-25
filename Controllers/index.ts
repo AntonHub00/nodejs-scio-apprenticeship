@@ -4,5 +4,5 @@ dotenv.config();
 
 import "../DB/DBConnection";
 
-import JWT from "./Implementations/JWT";
-import PasswordHasher from "./Implementations/PasswordHasher";
+import JWT from "../JWT/JWT";
+import PasswordHasher from "../PasswordHasher/PasswordHasher";
