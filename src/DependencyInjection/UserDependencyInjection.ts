@@ -1,9 +1,9 @@
-import UserRepository from "./Infrastructure/DB/DBEntities/User/UserRespository";
-import JWT from "./Infrastructure/JWT/JWT";
-import PasswordHasher from "./Infrastructure/PasswordHasher/PasswordHasher";
+import UserRepository from "../Infrastructure/DB/DBEntities/User/UserRespository";
+import JWT from "../Infrastructure/JWT/JWT";
+import PasswordHasher from "../Infrastructure/PasswordHasher/PasswordHasher";
 
-import LoginUserUseCase from "./Domain/UseCases/User/LoginUser";
-import RegisterUserUseCase from "./Domain/UseCases/User/RegisterUser";
+import LoginUserUseCase from "../Domain/UseCases/User/LoginUser";
+import RegisterUserUseCase from "../Domain/UseCases/User/RegisterUser";
 
 const userRepository = new UserRepository();
 const passwordHasher = new PasswordHasher();

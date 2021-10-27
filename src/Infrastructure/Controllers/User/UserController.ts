@@ -1,5 +1,8 @@
 import { Request, Response, Router } from "express";
-import { LoginUser, RegisterUser } from "../../../DependencyInjection";
+import {
+  LoginUser,
+  RegisterUser,
+} from "../../../DependencyInjection/UserDependencyInjection";
 
 export default class UserController {
   private _router: Router;
