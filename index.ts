@@ -4,14 +4,16 @@ import express, { Express } from "express";
 dotenv.config();
 
 import { dbConnection } from "./src/Infrastructure/DB/DBConnection";
-import DependencyInjection from "./src/DependencyInjection";
-
-import UserController from "./src/Infrastructure/Controllers/User/UserController";
 
 const startServer = async () => {
   await dbConnection;
 
-  const dependencies = new DependencyInjection();
+  // Need to wait for connection to be ready because controllers imports the
+  // dependency injection modules which get repository specific implementations.
+  // If the connection is not ready, trying to get the repositories will fail.
+  const { default: UserController } = await import(
+    "./src/Infrastructure/Controllers/User/UserController"
+  );
 
   const port = process.env.APP_PORT;
   if (port == null) throw new Error("App port not set");
@@ -19,7 +21,7 @@ const startServer = async () => {
   const app: Express = express();
 
   app.use(express.json());
-  app.use("/api/user", new UserController(dependencies).router);
+  app.use("/api/user", new UserController().router);
 
   app.listen(port, () =>
     console.log(`Server listening on http://localhost:${port}`)

@@ -1,13 +1,10 @@
-import { Request, response, Response, Router } from "express";
-import DependencyInjection from "../../../DependencyInjection";
+import { Request, Response, Router } from "express";
+import { LoginUser, RegisterUser } from "../../../DependencyInjection";
 
 export default class UserController {
   private _router: Router;
-  private dependencies: DependencyInjection;
 
-  constructor(dependencies: DependencyInjection) {
-    this.dependencies = dependencies;
-
+  constructor() {
     this._router = Router();
 
     this.registerUser = this.registerUser.bind(this);
@@ -31,7 +28,7 @@ export default class UserController {
     }
 
     try {
-      await this.dependencies.RegisterUser.registerUser({ username, password });
+      await RegisterUser.registerUser({ username, password });
       res.status(201).send({ username, password });
     } catch (error) {
       const e = error as Error;
@@ -44,7 +41,7 @@ export default class UserController {
     const password: string = req.body.password;
 
     try {
-      const token = await this.dependencies.LoginUser.loginUser({
+      const token = await LoginUser.loginUser({
         username,
         password,
       });
