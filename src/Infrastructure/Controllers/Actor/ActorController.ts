@@ -35,7 +35,7 @@ export default class ActorController {
     const lastName: string = req.body.lastName;
     const yearOfBirth: number = req.body.yearOfBirth;
 
-    if (!(firstName || lastName || yearOfBirth))
+    if (!(firstName && lastName && yearOfBirth != undefined)) {
       res.status(400).send({
         error: "You must provide firstName, lastName and yearOfBirth",
       });
