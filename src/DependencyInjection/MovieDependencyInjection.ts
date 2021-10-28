@@ -10,7 +10,7 @@ const movieRepository = new MovieRepository();
 const createMovieUseCase = new CreateMovieUseCase(movieRepository);
 const deleteMovieUseCase = new DeleteMovieByIdUseCase(movieRepository);
 const findMovieByIdUseCase = new FindMovieByIdUseCase(movieRepository);
-const getAllMovies = new GetAllMoviesUseCase(movieRepository);
+const getAllMoviesUseCase = new GetAllMoviesUseCase(movieRepository);
 const updateMovieUseCase = new UpdateMovieUseCase(movieRepository);
 
 export {
@@ -18,6 +18,6 @@ export {
   createMovieUseCase,
   deleteMovieUseCase,
   findMovieByIdUseCase,
-  getAllMovies,
+  getAllMoviesUseCase,
   updateMovieUseCase,
 };
