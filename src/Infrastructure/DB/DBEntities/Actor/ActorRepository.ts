@@ -42,6 +42,10 @@ export default class ActorRepository implements IActorRespository {
   }
 
   public async deleteActorById(id: number): Promise<void> {
+    const dbActor = await this.findActorById(id);
+
+    if (dbActor == null) throw new Error("actor does not exist");
+
     await this._repository.delete(id);
   }
 
