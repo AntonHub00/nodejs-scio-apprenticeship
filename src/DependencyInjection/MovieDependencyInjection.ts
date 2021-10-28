@@ -1,3 +1,4 @@
+import AddExistingActorsToMovieUseCase from "../Domain/UseCases/Movie/AddExistingActorsToMoviesUseCase";
 import CreateMovieUseCase from "../Domain/UseCases/Movie/CreateMovieUseCase";
 import DeleteMovieByIdUseCase from "../Domain/UseCases/Movie/DeleteMovieByIdUseCase";
 import FindMovieByIdUseCase from "../Domain/UseCases/Movie/FindMovieByIdUseCase";
@@ -12,6 +13,9 @@ const deleteMovieUseCase = new DeleteMovieByIdUseCase(movieRepository);
 const findMovieByIdUseCase = new FindMovieByIdUseCase(movieRepository);
 const getAllMoviesUseCase = new GetAllMoviesUseCase(movieRepository);
 const updateMovieUseCase = new UpdateMovieUseCase(movieRepository);
+const addExistingActorsToMovieUseCase = new AddExistingActorsToMovieUseCase(
+  movieRepository
+);
 
 export {
   movieRepository,
@@ -20,4 +24,5 @@ export {
   findMovieByIdUseCase,
   getAllMoviesUseCase,
   updateMovieUseCase,
+  addExistingActorsToMovieUseCase,
 };
