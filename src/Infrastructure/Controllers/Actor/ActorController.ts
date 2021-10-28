@@ -3,6 +3,7 @@ import {
   createActorUseCase,
   deleteActorByIdUseCase,
   findActorByIdUseCase,
+  getAllActorsUseCase,
 } from "../../../DependencyInjection/ActorDependencyInjection";
 
 export default class ActorController {
@@ -14,10 +15,12 @@ export default class ActorController {
     this.createActor = this.createActor.bind(this);
     this.findActorById = this.findActorById.bind(this);
     this.deleteActorById = this.deleteActorById.bind(this);
+    this.getAllActors = this.getAllActors.bind(this);
 
     this.router.post("/", this.createActor);
     this.router.get("/:id", this.findActorById);
     this.router.delete("/:id", this.deleteActorById);
+    this.router.get("/", this.getAllActors);
   }
 
   public get router(): Router {
@@ -71,5 +74,10 @@ export default class ActorController {
       const e = error as Error;
       res.status(404).send({ error: e.message });
     }
+  }
+
+  public async getAllActors(req: Request, res: Response) {
+    const dbActors = await getAllActorsUseCase.getAllActors();
+    res.status(200).send(dbActors);
   }
 }
