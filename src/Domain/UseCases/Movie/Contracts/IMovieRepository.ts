@@ -7,4 +7,8 @@ export default interface IMovieRepository {
   updateMovie: (id: number, movie: IMovieCreateDTO) => Promise<void>;
   deleteMovieById: (id: number) => Promise<void>;
   getAllMovies: () => Promise<IMovieDTO[]>;
+  addExistingActorsToMovie: (
+    movieId: number,
+    actorIds: number[]
+  ) => Promise<void>;
 }
