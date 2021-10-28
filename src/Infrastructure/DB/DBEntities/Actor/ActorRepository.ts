@@ -38,6 +38,10 @@ export default class ActorRepository implements IActorRespository {
   }
 
   public async updateActor(id: number, actor: IActorCreateDTO): Promise<void> {
+    const dbActor = await this.findActorById(id);
+
+    if (dbActor == null) throw new Error("actor does not exist");
+
     await this._repository.update(id, actor);
   }
 
