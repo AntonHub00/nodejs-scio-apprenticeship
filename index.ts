@@ -23,6 +23,10 @@ const startServer = async () => {
     "./src/Infrastructure/Controllers/Movie/MovieController"
   );
 
+  const { default: authenticate } = await import(
+    "./src/Infrastructure/Controllers/Middlewares/Authenticate"
+  );
+
   const port = process.env.APP_PORT;
   if (port == null) throw new Error("App port not set");
 
@@ -30,8 +34,8 @@ const startServer = async () => {
 
   app.use(express.json());
   app.use("/api/users", new UserController().router);
-  app.use("/api/actors", new ActorController().router);
-  app.use("/api/movies", new MovieController().router);
+  app.use("/api/actors", authenticate, new ActorController().router);
+  app.use("/api/movies", authenticate, new MovieController().router);
 
   app.listen(port, () =>
     console.log(`Server listening on http://localhost:${port}`)
