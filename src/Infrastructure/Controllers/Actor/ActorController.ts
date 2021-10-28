@@ -4,6 +4,7 @@ import {
   deleteActorByIdUseCase,
   findActorByIdUseCase,
   getAllActorsUseCase,
+  updateActorUseCase,
 } from "../../../DependencyInjection/ActorDependencyInjection";
 
 export default class ActorController {
@@ -16,11 +17,13 @@ export default class ActorController {
     this.findActorById = this.findActorById.bind(this);
     this.deleteActorById = this.deleteActorById.bind(this);
     this.getAllActors = this.getAllActors.bind(this);
+    this.updateActor = this.updateActor.bind(this);
 
     this.router.post("/", this.createActor);
     this.router.get("/:id", this.findActorById);
     this.router.delete("/:id", this.deleteActorById);
     this.router.get("/", this.getAllActors);
+    this.router.put("/:id", this.updateActor);
   }
 
   public get router(): Router {
@@ -45,6 +48,35 @@ export default class ActorController {
       });
 
       res.status(201).send(dbActor);
+    } catch (error) {
+      const e = error as Error;
+      res.status(400).send({ error: e.message });
+    }
+  }
+
+  public async updateActor(req: Request, res: Response) {
+    const id = Number(req.params.id);
+    const firstName: string = req.body.firstName;
+    const lastName: string = req.body.lastName;
+    const yearOfBirth: number = req.body.yearOfBirth;
+
+    if (!(firstName && lastName && yearOfBirth != undefined)) {
+      res.status(400).send({
+        error: "You must provide firstName, lastName and yearOfBirth",
+      });
+
+      return;
+    }
+
+    try {
+      await updateActorUseCase.updateActor({
+        id,
+        firstName,
+        lastName,
+        yearOfBirth,
+      });
+
+      res.status(200).send();
     } catch (error) {
       const e = error as Error;
       res.status(400).send({ error: e.message });
