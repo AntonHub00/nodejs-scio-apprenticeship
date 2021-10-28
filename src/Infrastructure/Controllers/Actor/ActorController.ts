@@ -40,6 +40,9 @@ export default class ActorController {
         error: "You must provide firstName, lastName and yearOfBirth",
       });
 
+      return;
+    }
+
     try {
       const dbActor = await createActorUseCase.createActor({
         firstName,
