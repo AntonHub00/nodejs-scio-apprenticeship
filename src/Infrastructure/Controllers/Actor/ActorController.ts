@@ -1,6 +1,7 @@
 import { Request, Response, Router } from "express";
 import {
   createActorUseCase,
+  deleteActorByIdUseCase,
   findActorByIdUseCase,
 } from "../../../DependencyInjection/ActorDependencyInjection";
 
@@ -12,9 +13,11 @@ export default class ActorController {
 
     this.createActor = this.createActor.bind(this);
     this.findActorById = this.findActorById.bind(this);
+    this.deleteActorById = this.deleteActorById.bind(this);
 
     this.router.post("/", this.createActor);
     this.router.get("/:id", this.findActorById);
+    this.router.delete("/:id", this.deleteActorById);
   }
 
   public get router(): Router {
@@ -56,5 +59,17 @@ export default class ActorController {
     }
 
     res.status(200).send(dbActor);
+  }
+
+  public async deleteActorById(req: Request, res: Response) {
+    const actorId = Number(req.params.id);
+
+    try {
+      await deleteActorByIdUseCase.deleteActorById(actorId);
+      res.status(200).send();
+    } catch (error) {
+      const e = error as Error;
+      res.status(404).send({ error: e.message });
+    }
   }
 }
