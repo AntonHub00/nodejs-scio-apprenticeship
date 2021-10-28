@@ -1,5 +1,6 @@
 import { createConnection } from "typeorm";
 import ActorDBEntity from "./DBEntities/Actor/ActorDBEntity";
+import MovieDBEntity from "./DBEntities/Movie/MovieDBEntity";
 
 import UserDBEntity from "./DBEntities/User/UserDBEntity";
 
@@ -32,7 +33,7 @@ const dbConnection = createConnection({
   },
   logging: false,
   synchronize: true,
-  entities: [UserDBEntity, ActorDBEntity],
+  entities: [UserDBEntity, ActorDBEntity, MovieDBEntity],
 });
 
 export { dbConnection };
