@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import MovieDBEntity from "../Movie/MovieDBEntity";
 
 @Entity("Actor")
 export default class ActorDBEntity {
@@ -13,4 +14,7 @@ export default class ActorDBEntity {
 
   @Column()
   yearOfBirth!: number;
+
+  @ManyToMany((type) => MovieDBEntity, (movie) => movie.actors)
+  movies!: MovieDBEntity[];
 }
