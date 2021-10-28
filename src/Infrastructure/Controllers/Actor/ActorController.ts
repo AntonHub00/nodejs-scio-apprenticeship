@@ -1,5 +1,8 @@
 import { Request, Response, Router } from "express";
-import { createActorUseCase } from "../../../DependencyInjection/ActorDependencyInjection";
+import {
+  createActorUseCase,
+  findActorByIdUseCase,
+} from "../../../DependencyInjection/ActorDependencyInjection";
 
 export default class ActorController {
   private _router: Router;
@@ -8,8 +11,10 @@ export default class ActorController {
     this._router = Router();
 
     this.createActor = this.createActor.bind(this);
+    this.findActorById = this.findActorById.bind(this);
 
     this.router.post("/", this.createActor);
+    this.router.get("/:id", this.findActorById);
   }
 
   public get router(): Router {
@@ -38,5 +43,18 @@ export default class ActorController {
       const e = error as Error;
       res.status(400).send({ error: e.message });
     }
+  }
+
+  public async findActorById(req: Request, res: Response) {
+    const actorId = Number(req.params.id);
+
+    const dbActor = await findActorByIdUseCase.findActorById(actorId);
+
+    if (dbActor == null) {
+      res.status(404).send({ error: "not found" });
+      return;
+    }
+
+    res.status(200).send(dbActor);
   }
 }
