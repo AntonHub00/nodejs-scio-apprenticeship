@@ -36,7 +36,7 @@ export default class ActorController {
       res.status(201).send(dbActor);
     } catch (error) {
       const e = error as Error;
-      res.status(400).send({ error: e });
+      res.status(400).send({ error: e.message });
     }
   }
 }
