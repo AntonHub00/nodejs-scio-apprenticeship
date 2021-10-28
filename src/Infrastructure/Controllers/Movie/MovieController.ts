@@ -1,5 +1,6 @@
 import { Request, Response, Router } from "express";
 import {
+  addExistingActorsToMovieUseCase,
   createMovieUseCase,
   deleteMovieUseCase,
   findMovieByIdUseCase,
@@ -18,12 +19,14 @@ export default class MovieController {
     this.deleteMovieById = this.deleteMovieById.bind(this);
     this.getAllMovies = this.getAllMovies.bind(this);
     this.updateMovie = this.updateMovie.bind(this);
+    this.addExistingActorsToMovie = this.addExistingActorsToMovie.bind(this);
 
     this.router.post("/", this.createMovie);
     this.router.get("/:id", this.findMovieById);
     this.router.delete("/:id", this.deleteMovieById);
     this.router.get("/", this.getAllMovies);
     this.router.put("/:id", this.updateMovie);
+    this.router.post("/:movieId", this.addExistingActorsToMovie);
   }
 
   public get router(): Router {
@@ -114,5 +117,27 @@ export default class MovieController {
   public async getAllMovies(_req: Request, res: Response) {
     const dbMovies = await getAllMoviesUseCase.getAllMovies();
     res.status(200).send(dbMovies);
+  }
+
+  public async addExistingActorsToMovie(req: Request, res: Response) {
+    const movieId = Number(req.params.movieId);
+    const actorIds: number[] = req.body.actorIds;
+
+    if (!actorIds?.length) {
+      res.status(400).send({ error: "You must provide actorIds" });
+      return;
+    }
+
+    try {
+      await addExistingActorsToMovieUseCase.addExistingActorsToMovie(
+        movieId,
+        actorIds
+      );
+
+      res.status(201).send();
+    } catch (error) {
+      const e = error as Error;
+      res.status(400).send({ error: e.message });
+    }
   }
 }
