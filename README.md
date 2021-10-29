@@ -5,7 +5,9 @@ TypeORM (CRUD) and authentication with JWT.
 
 It is suposed to be a backend for users to manage movies and actors. A user can
 apply CRUD operations for movies and actors and also add existing actors to an
-existing movie.
+existing movie. In order to use those enpoints at least one user must registered
+and authenticated. Just to make it easier, all created users will share the same
+data (movies and actors).
 
 ## Technologies used
 
